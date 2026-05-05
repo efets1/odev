@@ -19,5 +19,8 @@
     - name: Eski container sil
       shell: docker rm -f myapp || true
 
+    - name: Yeni imajı çek
+      shell: docker pull {{ docker_user }}/myapp:latest
+
     - name: Yeni container çalıştır
       shell: docker run -d -p 80:5000 --name myapp {{ docker_user }}/myapp:latest
