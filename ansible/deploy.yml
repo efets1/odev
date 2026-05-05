@@ -43,6 +43,15 @@
         chdir: /opt/mhrs
       ignore_errors: yes
 
+    - name: 80 portunu kullanan containerı zorla kapat
+      shell: |
+        CONTAINER=$(docker ps -q --filter "publish=80")
+        if [ -n "$CONTAINER" ]; then
+          docker stop $CONTAINER
+          docker rm $CONTAINER
+        fi
+      ignore_errors: yes
+
     - name: Docker Compose ile uygulamayı ayağa kaldır
       shell: docker compose up -d
       args:
