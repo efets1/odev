@@ -23,12 +23,21 @@
         path: /opt/mhrs
         state: directory
 
-    - name: Proje dosyalarını sunucuya kopyala
-      copy:
-        src: "{{ playbook_dir }}/../"
-        dest: /opt/mhrs/
+    - name: Docker Compose dosyasını oluştur (Template)
+      template:
+        src: "{{ playbook_dir }}/../docker-compose.yml.j2"
+        dest: /opt/mhrs/docker-compose.yml
+
+    - name: Docker Hub login
+      shell: echo "{{ docker_pass }}" | docker login -u "{{ docker_user }}" --password-stdin
+      when: docker_pass is defined
+
+    - name: Yeni imajları çek
+      shell: docker compose pull
+      args:
+        chdir: /opt/mhrs
 
     - name: Docker Compose ile uygulamayı ayağa kaldır
-      shell: docker compose up -d --build
+      shell: docker compose up -d
       args:
         chdir: /opt/mhrs

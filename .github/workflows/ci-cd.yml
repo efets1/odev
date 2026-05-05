@@ -13,7 +13,18 @@ jobs:
     - name: Repo çek
       uses: actions/checkout@v3
 
-    # (Docker imajları sunucuda docker-compose ile derleneceği için bu adımlar kaldırıldı)
+    - name: Docker login
+      run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
+    - name: Backend Image Build & Push
+      run: |
+        docker build -t ${{ secrets.DOCKER_USER }}/mhrs-backend:latest ./backend
+        docker push ${{ secrets.DOCKER_USER }}/mhrs-backend:latest
+
+    - name: Frontend Image Build & Push
+      run: |
+        docker build -t ${{ secrets.DOCKER_USER }}/mhrs-frontend:latest ./frontend
+        docker push ${{ secrets.DOCKER_USER }}/mhrs-frontend:latest
 
     - name: Ansible kur
       run: sudo apt install ansible -y
@@ -25,6 +36,6 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
 
     - name: Deploy
-      run: ansible-playbook -i ansible/inventory.ini ansible/deploy.yml -e "docker_user=${{ secrets.DOCKER_USER }}"
+      run: ansible-playbook -i ansible/inventory.ini ansible/deploy.yml -e "docker_user=${{ secrets.DOCKER_USER }} docker_pass=${{ secrets.DOCKER_PASS }}"
       env:
         ANSIBLE_HOST_KEY_CHECKING: False
