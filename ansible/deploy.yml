@@ -37,6 +37,12 @@
       args:
         chdir: /opt/mhrs
 
+    - name: Eski containerları durdur ve kaldır
+      shell: docker compose down
+      args:
+        chdir: /opt/mhrs
+      ignore_errors: yes
+
     - name: Docker Compose ile uygulamayı ayağa kaldır
       shell: docker compose up -d
       args:
