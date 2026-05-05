@@ -29,6 +29,6 @@
         dest: /opt/mhrs/
 
     - name: Docker Compose ile uygulamayı ayağa kaldır
-      shell: docker-compose up -d --build
+      shell: docker compose up -d --build
       args:
         chdir: /opt/mhrs
