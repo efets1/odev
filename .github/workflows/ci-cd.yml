@@ -17,10 +17,10 @@ jobs:
       run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
     - name: Image build
-      run: docker build -t yourdockerhub/myapp:latest .
+      run: docker build -t ${{ secrets.DOCKER_USER }}/myapp:latest .
 
     - name: Image push
-      run: docker push yourdockerhub/myapp:latest
+      run: docker push ${{ secrets.DOCKER_USER }}/myapp:latest
 
     - name: Ansible kur
       run: sudo apt install ansible -y
@@ -32,4 +32,6 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
 
     - name: Deploy
-      run: ansible-playbook -i ansible/inventory.ini ansible/deploy.yml
+      run: ansible-playbook -i ansible/inventory.ini ansible/deploy.yml -e "docker_user=${{ secrets.DOCKER_USER }}"
+      env:
+        ANSIBLE_HOST_KEY_CHECKING: False

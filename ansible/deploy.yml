@@ -20,4 +20,4 @@
       shell: docker rm -f myapp || true
 
     - name: Yeni container çalıştır
-      shell: docker run -d -p 80:5000 --name myapp yourdockerhub/myapp:latest
+      shell: docker run -d -p 80:5000 --name myapp {{ docker_user }}/myapp:latest
