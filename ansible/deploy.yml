@@ -4,9 +4,11 @@
 
   tasks:
 
-    - name: Docker kur
+    - name: Docker ve Docker Compose kur
       apt:
-        name: docker.io
+        name: 
+          - docker.io
+          - docker-compose
         state: present
         update_cache: yes
 
@@ -16,11 +18,17 @@
         state: started
         enabled: yes
 
-    - name: Eski container sil
-      shell: docker rm -f myapp || true
+    - name: Hedef klasörü oluştur
+      file:
+        path: /opt/mhrs
+        state: directory
 
-    - name: Yeni imajı çek
-      shell: docker pull {{ docker_user }}/myapp:latest
+    - name: Proje dosyalarını sunucuya kopyala
+      copy:
+        src: "{{ playbook_dir }}/../"
+        dest: /opt/mhrs/
 
-    - name: Yeni container çalıştır
-      shell: docker run -d -p 80:5000 --name myapp {{ docker_user }}/myapp:latest
+    - name: Docker Compose ile uygulamayı ayağa kaldır
+      shell: docker-compose up -d --build
+      args:
+        chdir: /opt/mhrs

@@ -1,0 +1,126 @@
+/* Global Styles & Variables */
+:root {
+  --color-primary: #70A1D7;
+  --color-surface: #B3B3B3;
+  --color-text: #000000;
+  --color-white: #FFFFFF;
+  --font-main: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  max-width: 402px; /* Figma mobile frame width */
+  min-height: 100vh;
+  background-color: var(--color-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Common Layout Containers */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center horizontally and vertically mostly */
+  flex-grow: 1;
+  padding: 40px 20px;
+  gap: 40px;
+}
+
+.page-container.top-aligned {
+  justify-content: flex-start;
+  padding-top: 60px;
+}
+
+/* Title / Header */
+.page-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--color-primary); /* Sometimes inside a grey box, so colors vary */
+}
+
+/* Inputs */
+.input-field {
+  width: 280px;
+  height: 60px;
+  background-color: var(--color-surface);
+  border: none;
+  font-family: var(--font-main);
+  font-size: 16px;
+  padding: 0 20px;
+  color: var(--color-text);
+  margin-bottom: 20px;
+  outline: none;
+}
+.input-field::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+/* Form Container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Buttons */
+.btn-primary {
+  width: 234px;
+  height: 94px;
+  background-color: var(--color-surface);
+  border: none;
+  color: var(--color-text);
+  font-family: var(--font-main);
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-primary:active {
+  opacity: 0.8;
+}
+
+.btn-small {
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.btn-large {
+  width: 280px;
+  height: 80px;
+  font-size: 24px;
+}
+
+/* Cards / Placeholders for lists */
+.list-placeholder {
+  width: 320px;
+  min-height: 400px;
+  background-color: var(--color-surface);
+  margin-top: 20px;
+}
